@@ -42,6 +42,8 @@ You do not need to copy the UI design but it is better to keep it as close as po
 
 ## Screenshots
 
+<div display="inline">
+
 <img src="./screenshots/Screenshot_1619690482.png" alt="drawing" width="200"/>
 
 <img src="./screenshots/Screenshot_1619690489.png" alt="drawing" width="200"/>
@@ -57,3 +59,4 @@ You do not need to copy the UI design but it is better to keep it as close as po
 <img src="./screenshots/Screenshot_1619690524.png" alt="drawing" width="200"/>
 
 <img src="./screenshots/Screenshot_1619690567.png" alt="drawing" width="200"/>
+</div>
