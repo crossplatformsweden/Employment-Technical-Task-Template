@@ -42,18 +42,18 @@ You do not need to copy the UI design but it is better to keep it as close as po
 
 ## Screenshots
 
-![](./screenshots/Screenshot_1619690482.png)
+<img src="./screenshots/Screenshot_1619690482.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690489.png)
+<img src="./screenshots/Screenshot_1619690489.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690554.png)
+<img src="./screenshots/Screenshot_1619690554.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690504.png)
+<img src="./screenshots/Screenshot_1619690504.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690511.png)
+<img src="./screenshots/Screenshot_1619690511.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690519.png)
+<img src="./screenshots/Screenshot_1619690519.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690524.png)
+<img src="./screenshots/Screenshot_1619690524.png" alt="drawing" width="200"/>
 
-![](./screenshots/Screenshot_1619690567.png)
+<img src="./screenshots/Screenshot_1619690567.png" alt="drawing" width="200"/>
