@@ -24,7 +24,7 @@ Your task is to create a new [Expo](https://docs.expo.dev/) app using the [TypeS
 
 ## Tasks
 
-The project is a system that represent a store with products. Using the system the user can add new products and edit/delete existing products.
+The project is a system that represent a store with products. Using the system the user can add new products and edit and delete existing products.
 
 **Remarks:** the screenshots is only an example design and your final app **does not** have to look exactly like the screenshots. You can use any UI framework you find appropriate.
 
