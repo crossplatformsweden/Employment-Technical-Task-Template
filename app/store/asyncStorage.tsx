@@ -9,7 +9,7 @@ export const storeItemData = async (object: dataObjectType[]) => {
         let stringifyData = JSON.stringify(object)
         console.log(stringifyData)
         try {
-            // await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
+            await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
             await AsyncStorage.setItem(STORE_DATA_ASYNC, stringifyData)
             isSuccess = true
         } catch (e) {

@@ -1,4 +1,3 @@
-import {StatusBar} from 'expo-status-bar';
 import React, {FC, useContext, useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {Button, FAB} from "react-native-elements";
@@ -20,12 +19,23 @@ const HomeLayout: FC<Props> = ({navigation}) => {
 
     const [homeData, setHomeData] = useState<dataObjectType[]>([])
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', ()=> {
+            if(homeData !== appData){
+                setHomeData([])
+            }
+        })
+        return () => {
+            unsubscribe
+        }
+    },[navigation])
+
     useEffect(()=>{
-        console.log('App Data update')
-        setHomeData(appData)
-    },[appData])
-
-
+        if(appData || homeData.length === 0){
+            console.log('Data updated')
+            setHomeData(appData)
+        }
+    },[homeData,navigation,appData])
 
     const deleteItem = (item: dataObjectType) => {
         let currentList: dataObjectType[]  = appData
@@ -35,7 +45,7 @@ const HomeLayout: FC<Props> = ({navigation}) => {
         storeNewData(currentList)
     }
 
-    const ListElement = (item: dataObjectType) => {
+    let ListElement = (item: dataObjectType) => {
 
         return(
             <View style={styles.cardItemWrapper}>
@@ -58,9 +68,9 @@ const HomeLayout: FC<Props> = ({navigation}) => {
             <View style={styles.itemListWrapper}>
                 <FlatList
                     data={homeData}
+                    refreshing={true}
                     renderItem={(item) => ListElement(item.item)}
-                    keyExtractor={(item:dataObjectType, index:number) => { return index.toString()}}
-                    extraData={homeData}/>
+                    keyExtractor={(item:dataObjectType, index:number) => { return index.toString()}}/>
             </View>
             <FAB
                 // addItem

@@ -13,12 +13,13 @@ AppDataContext = createContext<PropsType>({
     }
 });
 
+
+
 export const AppDataProvider: FC<dataObjectType[]> = ({children}) => {
 
-    const [appData, setAppData] = useState<dataObjectType[]>([])
+    let [appData, setAppData] = useState<dataObjectType[]>([])
 
     useEffect(() => {
-        let storedItems: dataObjectType[] = []
 
         getStoredItemData()
             .then((itemArray) => {

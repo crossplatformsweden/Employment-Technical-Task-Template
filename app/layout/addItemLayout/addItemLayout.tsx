@@ -9,6 +9,14 @@ import { Button } from 'react-native-elements';
 import {AppDataContext} from "../../config/contextManage";
 import {dataObjectType} from "../../config/dataObjectType";
 import {RouteProp} from "@react-navigation/native";
+import {
+    CLEAR_BUTTON,
+    NAME_PLACEHOLDER,
+    NAME_VALIDATION_ERROR,
+    PRICE_PLACEHOLDER,
+    PRICE_VALIDATION_ERROR, PRODUCT_ALREADY_AVAILABLE, SUBMIT_BUTTON, TYPE_VALIDATION_ERROR
+} from "../../config/StringData";
+import {validationPrice, validationTextOnlyInput} from "../../config/validation";
 
 interface Props {
     navigation: NativeStackNavigationProp<RootNavigationType,'addItem'>
@@ -30,17 +38,50 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
 
     const [productName, setProductName] = useState<string>('')
     const [productPrice, setProductPrice] = useState<string>('')
-    const [selectedType, setSelectedType] = useState<string>(types[0].label)
+    const [selectedType, setSelectedType] = useState<string>('')
     const [open, setOpen] = useState<boolean>(false);
 
     useEffect(()=> {
-        setProductName(item.name)
-        setProductPrice(item.price)
-        setSelectedType(item.type)
+        if(item.name){
+            setProductName(item.name)
+            setProductPrice(item.price.toString())
+            setSelectedType(item.type)
+        }
     },[])
 
+    const isSuccessFieldValidation = (productName: string, productPrice: string, selectedType: string) => {
+
+        let errorMessage: String = ''
+        if(productName === '' || !validationTextOnlyInput(productName)){
+            errorMessage = NAME_VALIDATION_ERROR
+        }else if(productPrice === '' || !validationPrice(productPrice)){
+            errorMessage = PRICE_VALIDATION_ERROR
+        }else if(selectedType === ''){
+            errorMessage = TYPE_VALIDATION_ERROR
+        }
+
+        return errorMessage
+    }
+
     const submitData = () => {
-        item.name? editData() : addData()
+        let validation = isSuccessFieldValidation(productName, productPrice, selectedType)
+        if(validation === ''){
+            item.name? editData() : addData()
+        }else {
+            alert(validation)
+        }
+    }
+
+    const clearData = () => {
+        if(item.name){
+            setProductName(item.name)
+            setProductPrice(item.price.toString())
+            setSelectedType(item.type)
+        }else {
+            setProductName('')
+            setProductPrice('')
+            setSelectedType('')
+        }
     }
 
     const editData = () => {
@@ -52,13 +93,25 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
         storeNewData(tempArray)
     }
 
+    const checkProductAvailability = (productName: string) => {
+
+        return appData.find((item) => item.name === productName)
+
+    }
+
+
     const addData = () => {
-        let newDataObject: dataObjectType = {
-            name: productName, price: Number.parseFloat(productPrice), type: selectedType
+        if(!checkProductAvailability(productName)){
+            let newDataObject: dataObjectType = {
+                name: productName, price: Number.parseFloat(productPrice), type: selectedType
+            }
+            let itemArray: dataObjectType[] | undefined = appData
+            itemArray ? itemArray.push(newDataObject) : null
+            storeNewData(itemArray)
+        }else {
+            alert(PRODUCT_ALREADY_AVAILABLE)
         }
-        let itemArray: dataObjectType[] | undefined = appData
-        itemArray ? itemArray.push(newDataObject) : null
-        storeNewData(itemArray)
+
     }
 
     return (
@@ -66,14 +119,14 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
             <LayoutHeader title={"Add Item"} isBackEnable={true} onPress={()=> navigation.pop()}/>
             <View style={styles.contentWrapper}>
                 <TextInput
-                    placeholder={'Name'}
+                    placeholder={NAME_PLACEHOLDER}
                     style={styles.textInput}
                     defaultValue={productName}
                     onChangeText={(val) => setProductName(val)}
                 />
                 <TextInput
                     defaultValue={productPrice}
-                    placeholder={'Name'}
+                    placeholder={PRICE_PLACEHOLDER}
                     keyboardType = 'numeric'
                     onChangeText={(val) => setProductPrice(val)}
                     style={styles.textInput}
@@ -86,8 +139,8 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
                     setValue={setSelectedType}
                 />
 
-                <Button buttonStyle={styles.button} title={'Submit'} onPress={() => submitData()}/>
-                <Button buttonStyle={styles.button} title={'Submit'} onPress={()=> alert('Submit')}/>
+                <Button buttonStyle={styles.button} title={SUBMIT_BUTTON} onPress={() => submitData()}/>
+                <Button buttonStyle={styles.button} title={CLEAR_BUTTON} onPress={()=> clearData()}/>
             </View>
         </View>
     );
