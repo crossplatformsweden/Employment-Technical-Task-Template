@@ -39,5 +39,5 @@ module.exports = {
     '!**/web-build/**',
     '!**/assets/**',
     '!**/navigation/**',
-  ],
+  ]
 };
