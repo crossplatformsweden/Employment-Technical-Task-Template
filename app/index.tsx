@@ -3,15 +3,15 @@ import {AppRegistry, StatusBar, View} from "react-native";
 import 'react-native-gesture-handler'
 import {warmGreen} from './config/colors';
 import RootNavigation from './navigation/RootNavigation';
-import HomeLayout from "./layout/homeLayout/homeLayout";
+import {AppDataProvider} from "./config/contextManage";
 
-// const Navigation = () => {
-//     return(
-//         <AppDataProvider>
-//             <RootNavigation/>
-//         </AppDataProvider>
-//     )
-// }
+const Navigation = () => {
+    return(
+        <AppDataProvider>
+            <RootNavigation/>
+        </AppDataProvider>
+    )
+}
 
 export default class CrossPlatform extends Component {
 
@@ -19,8 +19,8 @@ export default class CrossPlatform extends Component {
         return (
             <View style={{flex: 1}}>
                 <StatusBar barStyle="light-content" backgroundColor={warmGreen}/>
-                {/*<Navigation/>*/}
-                <RootNavigation/>
+                <Navigation/>
+                {/*<RootNavigation/>*/}
             </View>
         );
     }
