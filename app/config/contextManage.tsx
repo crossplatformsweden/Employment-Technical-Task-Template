@@ -13,8 +13,6 @@ AppDataContext = createContext<PropsType>({
     }
 });
 
-
-
 export const AppDataProvider: FC<dataObjectType[]> = ({children}) => {
 
     let [appData, setAppData] = useState<dataObjectType[]>([])
@@ -28,6 +26,10 @@ export const AppDataProvider: FC<dataObjectType[]> = ({children}) => {
             ).catch()
     }, [])
 
+    /**
+     * Store Data in context and Async Storate
+     * @param dataSet
+     */
     const storeNewData = (dataSet: dataObjectType[]) => {
         setAppData(dataSet)
         storeItemData(dataSet).then((isSuccess) => {

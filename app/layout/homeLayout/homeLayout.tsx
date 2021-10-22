@@ -20,48 +20,52 @@ const HomeLayout: FC<Props> = ({navigation}) => {
     const [homeData, setHomeData] = useState<dataObjectType[]>([])
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', ()=> {
-            if(homeData !== appData){
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (homeData !== appData) {
                 setHomeData([])
             }
         })
         return () => {
             unsubscribe
         }
-    },[navigation])
+    }, [navigation])
 
-    useEffect(()=>{
-        if(appData || homeData.length === 0){
+    useEffect(() => {
+        if (appData || homeData.length === 0) {
             console.log('Data updated')
             setHomeData(appData)
         }
-    },[homeData,navigation,appData])
+    }, [homeData, navigation, appData])
 
+    /**
+     * Item Delete Alert
+     * @param item
+     */
     const deleteItemAlert = (item: dataObjectType) => {
-        Alert.alert('Delete Item','Are you sure you want to delete the item',
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel",
-                },
-                {
-                    text: "Delete",
-                    onPress: () => deleteItem(item),
-                    style: "destructive",
-                },
-            ],)
+        Alert.alert('Delete Item', 'Are you sure you want to delete the item',
+            [{text: "Cancel", style: "cancel",},
+                {text: "Delete", onPress: () => deleteItem(item), style: "destructive",},],)
     }
 
+    /**
+     * Delete selected item
+     * @param item
+     */
     const deleteItem = (item: dataObjectType) => {
-        let currentList: dataObjectType[]  = appData
-        currentList = currentList.filter(function(value){
+        let currentList: dataObjectType[] = appData
+        currentList = currentList.filter(function (value) {
             return value !== item;
         });
         storeNewData(currentList)
     }
 
+    /**
+     * List Items
+     * @param item
+     * @constructor
+     */
     const ListItem = (item: dataObjectType) => {
-        return(
+        return (
             <ListElement
                 name={item.name}
                 price={item.price.toString()}
@@ -81,7 +85,9 @@ const HomeLayout: FC<Props> = ({navigation}) => {
                     refreshing={true}
                     renderItem={(item) => ListItem(item.item)}
                     ListEmptyComponent={<Text style={styles.emptyText}>Please Press Below Button to add Items</Text>}
-                    keyExtractor={(item:dataObjectType, index:number) => { return index.toString()}}/>
+                    keyExtractor={(item: dataObjectType, index: number) => {
+                        return index.toString()
+                    }}/>
             </View>
             <FAB
                 color={warmGreen}

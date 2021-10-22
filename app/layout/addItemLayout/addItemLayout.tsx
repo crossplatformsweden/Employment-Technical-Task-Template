@@ -14,7 +14,11 @@ import {
     NAME_PLACEHOLDER,
     NAME_VALIDATION_ERROR,
     PRICE_PLACEHOLDER,
-    PRICE_VALIDATION_ERROR, PRODUCT_ALREADY_AVAILABLE, SUBMIT_BUTTON, TYPE_VALIDATION_ERROR
+    PRICE_VALIDATION_ERROR,
+    PRODUCT_ALREADY_AVAILABLE,
+    PRODUCT_TYPE_PRICE_COMBINATION,
+    SUBMIT_BUTTON,
+    TYPE_VALIDATION_ERROR
 } from "../../config/StringData";
 import {validationPrice, validationTextOnlyInput} from "../../config/validation";
 import PrimaryTextInput from "../../component/input/primaryTextInput";
@@ -50,6 +54,22 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
         }
     },[])
 
+    /**
+     * Integrated Product Value should be in between 1000 and 2600
+     * @param productPrice
+     * @param selectedType
+     */
+    const isAmountValid = (productPrice: string, selectedType: string) => {
+        let amountVal = Number.parseFloat(productPrice)
+        return selectedType === 'Integrated' && amountVal > 1000 && amountVal < 2600;
+    }
+
+    /**
+     * Field Validation
+     * @param productName
+     * @param productPrice
+     * @param selectedType
+     */
     const isSuccessFieldValidation = (productName: string, productPrice: string, selectedType: string) => {
 
         let errorMessage: String = ''
@@ -59,11 +79,16 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
             errorMessage = PRICE_VALIDATION_ERROR
         }else if(selectedType === ''){
             errorMessage = TYPE_VALIDATION_ERROR
+        }else if(!isAmountValid(productPrice, selectedType)){
+            errorMessage = PRODUCT_TYPE_PRICE_COMBINATION
         }
 
         return errorMessage
     }
 
+    /**
+     * Submit Data
+     */
     const submitData = () => {
         let validation = isSuccessFieldValidation(productName, productPrice, selectedType)
         if(validation === ''){
@@ -73,18 +98,9 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
         }
     }
 
-    const clearData = () => {
-        if(item.name){
-            setProductName(item.name)
-            setProductPrice(item.price.toString())
-            setSelectedType(item.type)
-        }else {
-            setProductName('')
-            setProductPrice('')
-            setSelectedType('')
-        }
-    }
-
+    /**
+     * Edit data
+     */
     const editData = () => {
         let tempArray: dataObjectType[] = appData
         let currentList: number  = appData.findIndex(selectedItem => selectedItem.name === item.name)
@@ -94,13 +110,19 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
         storeNewData(tempArray)
     }
 
+    /**
+     * Check product name already available in the List
+     * @param productName
+     */
     const checkProductAvailability = (productName: string) => {
 
         return appData.find((item) => item.name === productName)
 
     }
 
-
+    /**
+     * Add new products
+     */
     const addData = () => {
         if(!checkProductAvailability(productName)){
             let newDataObject: dataObjectType = {
@@ -138,7 +160,7 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
                 />
 
                 <Button buttonStyle={styles.button} title={SUBMIT_BUTTON} onPress={() => submitData()}/>
-                <Button buttonStyle={styles.button} title={CLEAR_BUTTON} onPress={()=> clearData()}/>
+                <Button buttonStyle={styles.button} title={CLEAR_BUTTON} onPress={()=> navigation.pop()}/>
             </View>
         </View>
     );
