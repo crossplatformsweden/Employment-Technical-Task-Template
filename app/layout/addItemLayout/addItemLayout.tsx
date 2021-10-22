@@ -1,5 +1,5 @@
 import React, {FC, useContext, useEffect, useState} from 'react';
-import {TextInput, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from "./styles";
 import LayoutHeader from "../../component/header/headerComponent";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -17,6 +17,7 @@ import {
     PRICE_VALIDATION_ERROR, PRODUCT_ALREADY_AVAILABLE, SUBMIT_BUTTON, TYPE_VALIDATION_ERROR
 } from "../../config/StringData";
 import {validationPrice, validationTextOnlyInput} from "../../config/validation";
+import PrimaryTextInput from "../../component/input/primaryTextInput";
 
 interface Props {
     navigation: NativeStackNavigationProp<RootNavigationType,'addItem'>
@@ -118,18 +119,15 @@ const AddItemLayout: FC<Props> = ({navigation, route}) => {
         <View style={styles.container}>
             <LayoutHeader title={"Add Item"} isBackEnable={true} onPress={()=> navigation.pop()}/>
             <View style={styles.contentWrapper}>
-                <TextInput
+                <PrimaryTextInput
                     placeholder={NAME_PLACEHOLDER}
-                    style={styles.textInput}
                     defaultValue={productName}
-                    onChangeText={(val) => setProductName(val)}
-                />
-                <TextInput
+                    onChangeText={(val:string) => setProductName(val)}/>
+                <PrimaryTextInput
                     defaultValue={productPrice}
                     placeholder={PRICE_PLACEHOLDER}
                     keyboardType = 'numeric'
-                    onChangeText={(val) => setProductPrice(val)}
-                    style={styles.textInput}
+                    onChangeText={(val:string) => setProductPrice(val)}
                 />
                 <DropDownPicker
                     open={open}

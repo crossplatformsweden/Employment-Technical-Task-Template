@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import {DEFAULT_PADDING} from "../../config/constants";
-import {boarderGray, warmGreen, white} from "../../config/colors";
+import {boarderGray, warmGreen} from "../../config/colors";
 
 export const styles = StyleSheet.create({
 

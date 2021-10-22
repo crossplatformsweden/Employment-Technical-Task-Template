@@ -1,6 +1,6 @@
 import React, {FC, useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import {Button, FAB} from "react-native-elements";
+import {FlatList, View} from 'react-native';
+import {FAB} from "react-native-elements";
 import {styles} from "./styles";
 import {warmGreen, white} from "../../config/colors";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -8,6 +8,7 @@ import {RootNavigationType} from "../../navigation/RootNavigation";
 import LayoutHeader from "../../component/header/headerComponent";
 import {AppDataContext} from "../../config/contextManage";
 import {dataObjectType} from "../../config/dataObjectType";
+import ListElement from "../../component/listElement/listelement";
 
 interface Props {
     navigation: NativeStackNavigationProp<RootNavigationType>
@@ -16,7 +17,6 @@ interface Props {
 const HomeLayout: FC<Props> = ({navigation}) => {
 
     const {appData, storeNewData} = useContext(AppDataContext)
-
     const [homeData, setHomeData] = useState<dataObjectType[]>([])
 
     useEffect(() => {
@@ -45,20 +45,14 @@ const HomeLayout: FC<Props> = ({navigation}) => {
         storeNewData(currentList)
     }
 
-    let ListElement = (item: dataObjectType) => {
-
+    const ListItem = (item: dataObjectType) => {
         return(
-            <View style={styles.cardItemWrapper}>
-                <Text>Name : {item.name}</Text>
-                <Text>Price : {item.price}</Text>
-                <Text>Type : {item.type}</Text>
-
-                <View style={styles.buttonWrapper}>
-                    <Button buttonStyle={styles.itemButton} title={'Edit'}
-                            onPress={() => navigation.navigate('addItem', {item: item})}/>
-                    <Button buttonStyle={styles.itemButton} title={'Delete'} onPress={() => deleteItem(item)}/>
-                </View>
-            </View>
+            <ListElement
+                name={item.name}
+                price={item.price.toString()}
+                type={item.type}
+                editButtonPress={() => navigation.navigate('addItem', {item: item})}
+                deleteButtonPress={() => deleteItem(item)}/>
         )
     }
 
@@ -69,11 +63,10 @@ const HomeLayout: FC<Props> = ({navigation}) => {
                 <FlatList
                     data={homeData}
                     refreshing={true}
-                    renderItem={(item) => ListElement(item.item)}
+                    renderItem={(item) => ListItem(item.item)}
                     keyExtractor={(item:dataObjectType, index:number) => { return index.toString()}}/>
             </View>
             <FAB
-                // addItem
                 color={warmGreen}
                 style={styles.fabStyle}
                 placement={'right'}

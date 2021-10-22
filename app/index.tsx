@@ -20,7 +20,6 @@ export default class CrossPlatform extends Component {
             <View style={{flex: 1}}>
                 <StatusBar barStyle="light-content" backgroundColor={warmGreen}/>
                 <Navigation/>
-                {/*<RootNavigation/>*/}
             </View>
         );
     }
