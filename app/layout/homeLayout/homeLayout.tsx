@@ -1,5 +1,5 @@
 import React, {FC, useContext, useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
+import {Alert, FlatList, View, Text} from 'react-native';
 import {FAB} from "react-native-elements";
 import {styles} from "./styles";
 import {warmGreen, white} from "../../config/colors";
@@ -37,6 +37,21 @@ const HomeLayout: FC<Props> = ({navigation}) => {
         }
     },[homeData,navigation,appData])
 
+    const deleteItemAlert = (item: dataObjectType) => {
+        Alert.alert('Delete Item','Are you sure you want to delete the item',
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    onPress: () => deleteItem(item),
+                    style: "destructive",
+                },
+            ],)
+    }
+
     const deleteItem = (item: dataObjectType) => {
         let currentList: dataObjectType[]  = appData
         currentList = currentList.filter(function(value){
@@ -52,9 +67,10 @@ const HomeLayout: FC<Props> = ({navigation}) => {
                 price={item.price.toString()}
                 type={item.type}
                 editButtonPress={() => navigation.navigate('addItem', {item: item})}
-                deleteButtonPress={() => deleteItem(item)}/>
+                deleteButtonPress={() => deleteItemAlert(item)}/>
         )
     }
+
 
     return (
         <View style={styles.container}>
@@ -64,6 +80,7 @@ const HomeLayout: FC<Props> = ({navigation}) => {
                     data={homeData}
                     refreshing={true}
                     renderItem={(item) => ListItem(item.item)}
+                    ListEmptyComponent={<Text style={styles.emptyText}>Please Press Below Button to add Items</Text>}
                     keyExtractor={(item:dataObjectType, index:number) => { return index.toString()}}/>
             </View>
             <FAB

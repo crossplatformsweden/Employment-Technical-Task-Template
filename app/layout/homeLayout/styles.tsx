@@ -16,5 +16,11 @@ export const styles = StyleSheet.create({
         paddingBottom: DEFAULT_PADDING,
         paddingRight: DEFAULT_PADDING
     },
+    emptyText:{
+        margin: DEFAULT_PADDING*2,
+        fontSize:20,
+        textAlign:'center',
+        justifyContent:'center',
+    }
 
 })

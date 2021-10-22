@@ -1,30 +1,45 @@
 import React, {FC, memo} from "react";
-import {GestureResponderEvent, Text, View} from "react-native";
-import {Button} from "react-native-elements";
+import {GestureResponderEvent, Text, View,} from "react-native";
+import {Button, ListItem} from "react-native-elements";
 import {styles} from "./styles";
+import {white} from "../../config/colors";
 
 interface Props {
-    name:string
-    price:string
-    type:string
+    name: string
+    price: string
+    type: string
     editButtonPress: (event: GestureResponderEvent) => void
     deleteButtonPress: (event: GestureResponderEvent) => void
 }
 
-const ListElement: FC<Props> = ({name,price,type,editButtonPress,deleteButtonPress}) => {
+const ListElement: FC<Props> = ({name, price, type, editButtonPress, deleteButtonPress}) => {
 
-    return(
-        <View style={styles.cardItemWrapper}>
-            <Text>Name : {name}</Text>
-            <Text>Price : {price}</Text>
-            <Text>Type : {type}</Text>
+    return (
 
-            <View style={styles.buttonWrapper}>
-                <Button buttonStyle={styles.itemButton} title={'Edit'}
-                        onPress={editButtonPress}/>
-                <Button buttonStyle={styles.itemButton} title={'Delete'} onPress={deleteButtonPress}/>
+        <ListItem.Swipeable
+            leftContent={
+            <Button
+                title="Edit"
+                icon={{ name: 'info', color: 'white' }}
+                buttonStyle={styles.swipeButton}
+                onPress={editButtonPress}
+            />}
+            rightContent={
+                <Button
+                    title="Delete"
+                    icon={{ name: 'delete', color: 'white' }}
+                    buttonStyle={styles.swipeButtonRight}
+                    onPress={deleteButtonPress}
+                />}
+        >
+            <View style={styles.cardItemWrapper}>
+                <Text style={styles.text}>Name : {name}</Text>
+                <Text style={styles.text}>Price : {price}</Text>
+                <Text style={styles.text}>Type : {type}</Text>
+                <Text style={styles.subText}>Swipe to EDIT or DELETE</Text>
             </View>
-        </View>
+        </ListItem.Swipeable>
+
     )
 }
 

@@ -14,6 +14,16 @@ export const styles = StyleSheet.create({
         borderBottomColor: boarderGray,
         borderBottomWidth: 1,
     },
+    titleContainerAndroid:{
+        paddingTop: DEFAULT_PADDING * 0.5,
+        flexDirection:'row',
+        width: "100%",
+        height: "8%",
+        backgroundColor: warmGreen,
+        alignItems:'center',
+        borderBottomColor: boarderGray,
+        borderBottomWidth: 1,
+    },
     iconStyle:{
         paddingLeft: DEFAULT_PADDING,
     },

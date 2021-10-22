@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Text, View} from "react-native";
+import {Platform, Text, View} from "react-native";
 import {styles} from "./styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -12,7 +12,7 @@ interface Props {
 const LayoutHeader: FC<Props> = ({title, onPress, isBackEnable}) => {
 
     return (
-        <View style={styles.titleContainer}>
+        <View style={Platform.OS === 'ios'?styles.titleContainer:styles.titleContainerAndroid}>
             {isBackEnable ? (
                 <Icon style={styles.iconStyle} name={'angle-left'} size={30} onPress={() => onPress? onPress() : null}/>
             ) : null}
